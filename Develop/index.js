@@ -1,5 +1,6 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
+var fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -13,7 +14,7 @@ const questions = [
     name: 'sections',
     message: 'Which sections do you want?',
     choices: [
-    'table of contents','About', 'Installation', 'Usage', 'future',
+    'Table Of Contents','About', 'Installation', 'Usage', 'Future',
     ],
   },
 ];
@@ -30,35 +31,52 @@ inquirer
   )
   .then(answers => {
     console.info('Answer:', answers.sections);
-    var fileText;
+    var fileText = '';
 
-    if (answers.sections[0] == 'table of contents')
+    if (answers.sections[0] == 'Table Of Contents')
     {
       for (var section in answers.sections)
       {
-        if (section == 'table of contents')
-          continue;
+        if (section == 'Table Of Contents')
+          fileText = '## Table Of Contents/n/n';
+        
+        else
+          fileText += '- [' + section + '](#' + section + ')/n';
       }
     }
     
     for (var section in answers.sections)
     {
-      if (section == 'table of contents')
+      if (section == 'Table Of Contents')
         continue;
       
       questionTwo.message = 'Please type out your ' + section + ' section.';
       inquirer.prompt(questionTwo).then(answers => 
       {
-        
+        fileText += '/n## ' + section + '/n/n';
+        fileText += answers.content;
       });
     }
+    writeToFile(answers.location + '/README.md', fileText);
   });
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) 
+{
+  try {
+    fs.writeFileSync(fileName, data);
+    console.info('file written successfully');
+
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() 
+{
+  
+}
 
 // Function call to initialize app
 init();
