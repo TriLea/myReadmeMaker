@@ -51,6 +51,8 @@ function writeToFile(fileName, data)
 // file written successfully
 
 // // TODO: Create a function to initialize app
+
+// i think answers might be the wrong thing to pass
 function init() 
 { 
   inquirer.prompt(questions).then((answers) => 
