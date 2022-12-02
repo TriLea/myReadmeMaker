@@ -46,7 +46,7 @@ const questions = [
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) 
 {
-  //return ???????
+  return fs.writeFileSync(fileName, data);
 }
 // file written successfully
 
